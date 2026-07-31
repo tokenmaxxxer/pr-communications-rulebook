@@ -15,7 +15,10 @@ structurally (checked by core's `record-fields-gate.sh`, issue-66):
 State all four RACE stages explicitly:
 
 - **Research** — summary, pointing back to this issue's phase-1 survey.
-- **Objectives** — what this communication is meant to achieve.
+- **Action** — what this communication is meant to achieve/do (RACE's
+  second stage — corrected from an earlier "Objectives" mislabeling;
+  restores the actual RACE acronym, Research→Action→Communication→
+  Evaluation).
 - **Communication** — delivery mode / channel / timing.
 - **Evaluation** — success criteria, defined *before* send, not after.
 
@@ -35,9 +38,13 @@ time, not drafted live during a crisis.
 
 ---
 
-This template is manual-compliance only: core's `record-fields-gate.sh`
-checks contract §20 structural fields, not this role-specific
-`produces` sub-structure. Per proposal (d)/Q1, the gap is tracked as a
-follow-up for a new core issue (per-role `produces` sub-structure check),
-not solved with a local gate script (would repeat the vendored-copy
-pattern issue-2 just removed).
+Per issue-7 (mechanical enforcement), this manual-compliance gap is now
+covered by three local plugins — `race-sequence`, `key-message-tiers`,
+`qa-preapproval` — each a self-contained PreToolUse gate on `loop_state:
+landed` writes to `docs/issue-*/reports/pr-communications.md`, checking
+one methodology's sub-structure above (see each plugin's README and
+`docs/issue-7/reports/pr-communications.md` §Phase-2 checklist). Core's
+`record-fields-gate.sh` still checks only contract §20 structural fields
+— the local plugins are a stopgap per issue-7 proposal Q2, to be
+migrated to a core config mechanism if/when one exists; they are not
+meant to be permanent local infrastructure.

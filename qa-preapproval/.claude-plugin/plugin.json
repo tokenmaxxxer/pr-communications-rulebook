@@ -1,0 +1,7 @@
+{
+  "name": "qa-preapproval",
+  "description": "Owns the pre-approved Risk/Q&A methodology: every risk Q&A pair needs an approver's pre-approval mark, not just a draft answer (phase-2 only).",
+  "author": {
+    "name": "Jung Jiwon & Lee Jongkwan"
+  }
+}
