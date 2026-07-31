@@ -8,6 +8,21 @@
       "name": "pr-communications",
       "source": "./pr-communications",
       "description": "The pr-communications role on contract v3 (issue-160 round-3 promotion). Decides: 메시지가 외부에 어떻게 읽힐지."
+    },
+    {
+      "name": "race-sequence",
+      "source": "./race-sequence",
+      "description": "Mechanically enforces the RACE sequence (Research→Action→Communication→Evaluation) methodology (issue-7): phase-1 Research/Action facet plus a phase-2 PreToolUse gate on record order."
+    },
+    {
+      "name": "key-message-tiers",
+      "source": "./key-message-tiers",
+      "description": "Mechanically enforces the 3-tier key message methodology (1 core + supporting + proof points) (issue-7): phase-2-only PreToolUse gate on record structure."
+    },
+    {
+      "name": "qa-preapproval",
+      "source": "./qa-preapproval",
+      "description": "Mechanically enforces the pre-approved Risk/Q&A methodology (issue-7): phase-2-only PreToolUse gate plus a self-check checklist for approver sign-off marks."
     }
   ]
 }

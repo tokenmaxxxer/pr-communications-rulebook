@@ -1,0 +1,7 @@
+{
+  "name": "race-sequence",
+  "description": "Owns the RACE (Research -> Action -> Communication -> Evaluation) sequencing methodology, including its phase-1 facet (Research and Action only) and its phase-2 facet (full 4-stage order gate).",
+  "author": {
+    "name": "Jung Jiwon & Lee Jongkwan"
+  }
+}
