@@ -90,6 +90,8 @@ cleans them up on exit, building the JSON payload itself pipes on stdin. It
 covers the happy/sad path cases plus every mandatory case from
 `gate-house-standard.md`: `Edit`/`MultiEdit` with `replace_all`, malformed
 JSON, a kill-switch set to an unrecognized value, absolute/`./`-prefixed
-paths, a `Bash`-tool write, and a structural-upgrade regression case (a
+paths, a `Bash`-tool write, a structural-upgrade regression case (a
 word mention with no heading, which the old substring check would have
-passed).
+passed), and a missing-core case (core unreachable via both the
+`CLAUDE_PLUGIN_ROOT_CORE` override and the relative `../../core`
+fallback, which must fail closed with exit 2).

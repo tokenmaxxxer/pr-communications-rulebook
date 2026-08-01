@@ -16,7 +16,8 @@
 # Kill switch: KEY_MESSAGE_GATE_DISABLE=1 (or true/yes/on) skips the gate
 # entirely (emergency admin escape hatch only — see README.md). Any other
 # value, including unrecognized garbage, leaves the gate ACTIVE.
-. "${CLAUDE_PLUGIN_ROOT_CORE:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../core" && pwd -P)}/hooks/lib/gate-lib.sh"
+. "${CLAUDE_PLUGIN_ROOT_CORE:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../core" && pwd -P)}/hooks/lib/gate-lib.sh" \
+  || { echo "key-message-gate.sh: cannot source gate-lib.sh" >&2; exit 2; }
 gate_trap_fail_closed
 set -uo pipefail
 

@@ -234,6 +234,26 @@ else
   pass_case "12 Bash-tool write to the same target denies on the same defect"
 fi
 
+# Case 13 (missing-core, gate-house-standard.md case group 7): core
+# unreachable via both CLAUDE_PLUGIN_ROOT_CORE and the relative ../../core
+# fallback -> fail closed (exit 2, not silent allow/crash).
+printf '%s' "$GOOD" > "$f1"
+missing_core_out="$(cd "$WORKDIR" && printf '%s' "$(j_write "$f1" "$GOOD")" | env CLAUDE_PROJECT_DIR="$WORKDIR" CLAUDE_PLUGIN_ROOT_CORE="/nonexistent/path" "$GATE" 2>&1)"
+missing_core_status=$?
+if [[ "$missing_core_status" -eq 2 ]] && grep -q "cannot source gate-lib.sh" <<<"$missing_core_out"; then
+  pass_case "13 missing-core - fails closed with exit 2 and source-failure message"
+else
+  fail_case "13 missing-core - fails closed with exit 2 and source-failure message (got status=$missing_core_status, out=$missing_core_out)"
+fi
+
+# Case 14 (harmless Bash allow): an ordinary Bash command touching no path
+# resolving to docs/issue-*/reports/pr-communications.md passes through.
+if run_gate "$(j_bash "git status")" >/dev/null 2>&1; then
+  pass_case "14 harmless Bash command (git status) passes through"
+else
+  fail_case "14 harmless Bash command (git status) passes through (expected exit 0)"
+fi
+
 if [[ "$FAILED" -eq 0 ]]; then
   echo "All test cases passed."
   exit 0

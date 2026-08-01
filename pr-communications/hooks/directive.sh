@@ -2,7 +2,8 @@
 # SessionStart: pr-communications's role directive, stub form (core issue-66) —
 # shared boilerplate lives in core/hooks/lib/role-directive.sh; only this
 # role's four unique values live here.
-. "${CLAUDE_PLUGIN_ROOT_CORE:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../core" && pwd -P)}/hooks/lib/role-directive.sh"
+. "${CLAUDE_PLUGIN_ROOT_CORE:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../core" && pwd -P)}/hooks/lib/role-directive.sh" \
+  || { echo "directive.sh: cannot source role-directive.sh" >&2; exit 2; }
 
 YOU_DECIDE="YOU DECIDE: 메시지가 외부에 어떻게 읽힐지"
 USE_WHEN="USE WHEN: 외부 커뮤니케이션이 걸릴 때"
