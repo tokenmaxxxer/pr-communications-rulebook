@@ -98,6 +98,8 @@ The suite builds its own JSON payloads and pipes them on stdin. Beyond the
 happy/sad path cases, it covers every mandatory case from
 `gate-house-standard.md`: `Edit`/`MultiEdit` with `replace_all`, malformed
 JSON, a kill-switch set to an unrecognized value, absolute/`./`-prefixed
-paths, a `Bash`-tool write, and a structural-upgrade regression case (all
+paths, a `Bash`-tool write, a structural-upgrade regression case (all
 four labels present as bolded words in prose, not as top-level entries,
-which the old whole-document grep would have passed).
+which the old whole-document grep would have passed), and a missing-core
+case (core unreachable via both the `CLAUDE_PLUGIN_ROOT_CORE` override and
+the relative `../../core` fallback, which must fail closed with exit 2).

@@ -215,6 +215,37 @@ CASEEOF")" >/dev/null 2>&1
 status12=$?
 report "case12 Bash-tool write to the same target denies on the same defect" "$([ $status12 -ne 0 ] && echo 0 || echo 1)"
 
+# Case 13 (F3 regression): a draft answer whose note literally reads "NOT
+# pre-approved" must not satisfy the approval regex via substring match.
+CASE13='loop_state: landed
+
+## Risk/Q&A prep
+
+Q: What is the rollback plan?
+A: Revert the previous commit. (NOT pre-approved yet)
+'
+run_gate "$(j_write "$f" "$CASE13")" >/dev/null 2>&1
+status13=$?
+report "case13 REJECT - 'NOT pre-approved' does not satisfy the approval mark" "$([ $status13 -ne 0 ] && echo 0 || echo 1)"
+
+# Case 14 (missing-core, gate-house-standard.md case group 7): core
+# unreachable via both CLAUDE_PLUGIN_ROOT_CORE and the relative ../../core
+# fallback -> fail closed (exit 2, not silent allow/crash).
+printf '%s' "$CASE1" > "$f"
+missing_core_out="$(printf '%s' "$(j_write "$f" "$CASE1")" | env CLAUDE_PROJECT_DIR="$WORKDIR" CLAUDE_PLUGIN_ROOT_CORE="/nonexistent/path" "$GATE" 2>&1)"
+status14=$?
+if [[ "$status14" -eq 2 ]] && grep -q "cannot source gate-lib.sh" <<<"$missing_core_out"; then
+  report "case14 missing-core - fails closed with exit 2 and source-failure message" 0
+else
+  report "case14 missing-core - fails closed with exit 2 and source-failure message (got status=$status14, out=$missing_core_out)" 1
+fi
+
+# Case 15 (harmless Bash allow): an ordinary Bash command touching no path
+# resolving to docs/issue-*/reports/pr-communications.md passes through.
+run_gate "$(j_bash "git status")" >/dev/null 2>&1
+status15=$?
+report "case15 harmless Bash command (git status) passes through" "$([ $status15 -eq 0 ] && echo 0 || echo 1)"
+
 echo ""
 echo "Passed: $pass_count, Failed: $fail_count"
 

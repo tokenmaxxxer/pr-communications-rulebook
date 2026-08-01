@@ -16,7 +16,8 @@
 # Kill switch: QA_PREAPPROVAL_GATE_DISABLE=1 (or true/yes/on) skips the
 # gate entirely (emergency admin escape hatch only — see README.md). Any
 # other value, including unrecognized garbage, leaves the gate ACTIVE.
-. "${CLAUDE_PLUGIN_ROOT_CORE:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../core" && pwd -P)}/hooks/lib/gate-lib.sh"
+. "${CLAUDE_PLUGIN_ROOT_CORE:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../core" && pwd -P)}/hooks/lib/gate-lib.sh" \
+  || { echo "qa-preapproval-gate.sh: cannot source gate-lib.sh" >&2; exit 2; }
 gate_trap_fail_closed
 set -uo pipefail
 
@@ -126,7 +127,7 @@ try:
     # anywhere in the section.
     Q_RE = re.compile(r'^(?:Q:|질문)', re.M)
     A_RE = re.compile(r'^(?:A:|답변)', re.M)
-    APPROVED_RE = re.compile(r'pre-approved|사전\s*승인', re.I)
+    APPROVED_RE = re.compile(r'(?<!not\s)(?<!아니)(?<!미)(?:pre-approved|사전\s*승인)', re.I)
 
     q_starts = [mm.start() for mm in Q_RE.finditer(section)]
     if not q_starts:
